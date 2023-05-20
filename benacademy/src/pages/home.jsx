@@ -3,11 +3,24 @@ import { useInView } from 'react-intersection-observer';
 import { BsChevronDown } from 'react-icons/bs'
 
 import Navbar from "../components/navbar";
+import GenderOption from "../components/button";
 
 function Home() {
+
+  //Gender selected object 
+  class Gender {
+    constructor(gender, secondPageRef) {
+      this.gender = gender;
+      this.secondPageRef = secondPageRef;
+    }
+  }
+  const [genderObject, setGenderObject] = useState(null)
+  
   
   //Function for gender button clicks
   const genderBtnClicked = (gender) => {
+    const genderObject = new Gender(gender, pageTwoHook);
+    setGenderObject(genderObject);
     setGender(gender);
     const scrollTopPosition = pageThreeHook.current.offsetTop - 200;
     window.scrollTo({ top: scrollTopPosition, behavior: 'smooth' });
@@ -51,7 +64,7 @@ function Home() {
   return (
     <div>
 
-      <Navbar />
+      <Navbar gender_object={genderObject}/>
 
       <div 
         className = "w-full h-screen flex flex-col justify-center" style={{
@@ -85,18 +98,30 @@ function Home() {
 
 
         <div className="flex mt-4 w-full items-center justify-center" style={{ transform: 'translateY(-300%)' }} ref = {boyBtn}>
-          <div className={`mx-5 cursor-pointer border-2 border-white p-2 rounded-lg bg-black bg-opacity-${gender == 'male' ? '50' : '0'} hover:bg-opacity-30 transition-opacity duration-1000 ${btnInView ? 'opacity-100' : 'opacity-0'}`}
-          onClick={() => genderBtnClicked('male')}>
-            <h1 className="text-6xl">Boy 👦</h1>
-          </div>  
-          <div className={`mx-5 cursor-pointer border-2 border-white p-2 rounded-lg bg-black bg-opacity-${gender == 'female' ? '50' : '0'} hover:bg-opacity-30 transition-opacity duration-1000 ${btnInView ? 'opacity-100' : 'opacity-0'}`}
-          onClick={() => genderBtnClicked('female')}>
-            <h1 className="text-6xl">Girl 👧</h1>
-          </div>  
-          <div className={`mx-5 cursor-pointer border-2 border-white p-2 rounded-lg bg-black bg-opacity-${gender == 'other' ? '50' : '0'} hover:bg-opacity-30 transition-opacity duration-1000 ${btnInView ? 'opacity-100' : 'opacity-0'}`}
-          onClick={() => genderBtnClicked('other')} >
-            <h1 className="text-6xl">Other 🧑</h1>
-          </div>  
+        <GenderOption
+        gender="male"
+        selectedGender={gender}
+        btnInView={btnInView}
+        genderBtnClicked={genderBtnClicked}
+        label="Boy"
+        emoji="👦"
+      />
+      <GenderOption
+        gender="female"
+        selectedGender={gender}
+        btnInView={btnInView}
+        genderBtnClicked={genderBtnClicked}
+        label="Girl"
+        emoji="👧"
+      />
+      <GenderOption
+        gender="other"
+        selectedGender={gender}
+        btnInView={btnInView}
+        genderBtnClicked={genderBtnClicked}
+        label="Other"
+        emoji="🧑"
+      />
         </div>
 
       </div>
