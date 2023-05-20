@@ -61,15 +61,24 @@ function PreferenceBox ({preferences_object}) {
     )
 }
 
+function InterestBox({interest_object}){
+  return(
+    <div className="flex">
+      {interest_object.interests.map((interest) => (
+          <div className="ml-5 border border-white rounded-lg bg-white bg-opacity-0 hover:bg-opacity-30 px-2 cursor-pointer transition duration-200" onClick={() => ScrollTo(interest_object.fourthPageRef)}>{interest}</div>
+      ))}
+    </div>
+  )
+}
 
 
-
-export default function Navbar({pageOneRef, gender_object, preferences_object}) {
+export default function Navbar({pageOneRef, gender_object, preferences_object, interest_object}) {
     return (
         <div className="h-12 w-full fixed flex items-center px-5">
             <h1 className="cursor-pointer" onClick={() => ScrollTo(pageOneRef)}>DiscMeet</h1>
             {gender_object && <GenderBox gender_object={gender_object}/>}
             {preferences_object && preferences_object.preferences.length > 0 && <PreferenceBox preferences_object={preferences_object} />}
+            {interest_object && interest_object.interests.length > 0 && <InterestBox interest_object={interest_object} />}
             <h1 className="ml-auto">Match Time In: 6:59:33</h1>
         </div>
     )

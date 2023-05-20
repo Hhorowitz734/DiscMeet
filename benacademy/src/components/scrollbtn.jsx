@@ -10,7 +10,7 @@ export default function ScrollBtn({destinationPage}) {
     }
 
     return (
-        <div className="bg-richblack w-12 h-12 rounded-lg cursor-pointer hover:text-richblack hover:bg-white transition duration-200 flex justify-center items-center text-4xl" onClick = {() => scrollToPage(destinationPage)}>
+        <div className={`w-12 h-12 rounded-lg cursor-pointer hover:text-richblack hover:bg-white transition duration-200 flex justify-center items-center text-4xl`} onClick = {() => scrollToPage(destinationPage)}>
             <BsChevronDown />
         </div>  
     )

@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         richblack: '#001122',
-        pacific: '#0582CA',
+        veronica: '#8C3FFF',
         deepblue: '#006494',
         academic: '#003554',
         darkness: '#051923',
