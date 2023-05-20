@@ -29,25 +29,49 @@ function GenderBox ({gender_object}){
     )
 }
 
+function PreferenceBox ({preferences_object}) {
+
+    const setModalText = (pref) => {
+
+        let modal_text = '';
+
+        switch (pref) {
+            case 'Boys':
+                modal_text = 'Boys ❤️👦';
+              break;
+            case 'Girls':
+                modal_text = 'Girls ❤️👧';
+              break;
+            case 'People':
+              modal_text = modal_text = 'People ❤️🧑';
+              break;
+            default:
+              modal_text = 'unknown gender';
+          }
+        
+          return modal_text;
+    }
+
+    return(
+        <div className="flex">
+        {preferences_object.preferences.map((preference) => (
+            <div className="ml-5 border border-white rounded-lg bg-white bg-opacity-0 hover:bg-opacity-30 px-2 cursor-pointer transition duration-200" onClick={() => ScrollTo(preferences_object.thirdPageRef)}>{setModalText(preference)}</div>
+        ))}
+        </div>
+    )
+}
 
 
 
-export default function Navbar({gender_object}) {
-    if (gender_object){
+
+export default function Navbar({pageOneRef, gender_object, preferences_object}) {
     return (
         <div className="h-12 w-full fixed flex items-center px-5">
-            DiscMeet
-            <GenderBox gender_object={gender_object}/>
+            <h1 className="cursor-pointer" onClick={() => ScrollTo(pageOneRef)}>DiscMeet</h1>
+            {gender_object && <GenderBox gender_object={gender_object}/>}
+            {preferences_object && preferences_object.preferences.length > 0 && <PreferenceBox preferences_object={preferences_object} />}
             <h1 className="ml-auto">Match Time In: 6:59:33</h1>
         </div>
     )
-    }
-    else {
-        return (
-            <div className="h-12 w-full fixed flex items-center px-5">
-                DiscMeet
-                <h1 className="ml-auto">Match Time In: 6:59:33</h1>
-            </div>
-        )
-    }
+
 }

@@ -10,18 +10,30 @@ function Home() {
 
   //Preference selected object
 
+  class Preference {
+    constructor(preferences, thirdPageRef) {
+      this.preferences = preferences;
+      this.thirdPageRef = thirdPageRef;
+    }
+  }
+
   const [preferencesChosen, setPreferencesChosen] = useState([]);
+  const [preferenceObject, setPreferenceObject] = useState(null);
 
   function preferenceClicked(preference) {
     const index = preferencesChosen.indexOf(preference);
     const updatedPreferences = [...preferencesChosen];
     
     if (index !== -1) {
-      console.log(index, updatedPreferences[index]);
       updatedPreferences.splice(index, 1);
       setPreferencesChosen(updatedPreferences);
+      let preferenceObj = new Preference(updatedPreferences, pageThreeHook);
+      setPreferenceObject(preferenceObj);
     } else {
       setPreferencesChosen([...updatedPreferences, preference]);
+      
+      let preferenceObj = new Preference([...updatedPreferences, preference], pageThreeHook);
+      setPreferenceObject(preferenceObj);
     }
   }
   
@@ -46,6 +58,7 @@ function Home() {
   }
   
   //Ref Hooks defines
+  const pageOneHook = useRef(null);
   const pageTwoHook = useRef(null);
   const pageThreeHook = useRef(null);
 
@@ -64,6 +77,11 @@ function Home() {
   const [boyBtn, btnInView] = useInView({
     triggerOnce: false, // Fade in only once when in view
     threshold: 0.5, // Adjust the threshold value as per your needs
+  });
+
+  const [preferencesChoosers, selectorInView] = useInView({
+    triggerOnce: false,
+    threshold: 0.5
   })
 
   //Page backgrounds
@@ -83,14 +101,15 @@ function Home() {
   return (
     <div>
 
-      <Navbar gender_object={genderObject}/>
+      <Navbar pageOneRef = {pageOneHook} gender_object={genderObject} preferences_object={preferenceObject}/>
 
       <div 
-        className = "w-full h-screen flex flex-col justify-center" style={{
+        className = "w-full h-screen flex flex-col justify-center" ref = {pageOneHook} style={{
         backgroundImage: `url(${pageOneBg})`,
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
-      }}>
+      } 
+      }>
         <h1 className={`text-8xl text-center transition-opacity duration-500`}
           style={{ transform: 'translateY(-200%)' }}>Let's find your match</h1>
         <div className="text-white text-4xl text-center w-full justify-center flex" 
@@ -151,9 +170,9 @@ function Home() {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
       }} ref = {pageThreeHook}>
-        <h1 className={`text-6xl text-center mt-20 transition-opacity duration-500 `} 
+        <h1 className={`text-6xl text-center mt-20 transition-opacity duration-1000 ${selectorInView ? 'opacity-100' : 'opacity-0'}`} 
         style={{ transform: 'translateY(-650%)' }}>I'm looking for...</h1>
-        <div className="flex mt-4 w-full items-center justify-center" style={{ transform: 'translateY(-300%)' }}>
+        <div className={`flex mt-4 w-full items-center justify-center transition duration-1000 ${selectorInView ? 'opacity-100' : 'opacity-0'}`} style={{ transform: 'translateY(-300%)' }} ref={preferencesChoosers}>
           <Selector preferences = {preferencesChosen} preference = 'Boys' label = 'Boys' emoji = '👦' preferenceSelectionFunc = {preferenceClicked} />
           <Selector preferences = {preferencesChosen} preference = 'Girls' label = 'Girls' emoji = '👧' preferenceSelectionFunc = {preferenceClicked} />
           <Selector preferences = {preferencesChosen} preference = 'People' label = 'People' emoji = '🧑' preferenceSelectionFunc = {preferenceClicked} />
