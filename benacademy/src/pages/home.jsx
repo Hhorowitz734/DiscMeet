@@ -1,10 +1,10 @@
 import { React, useState, useRef } from "react";
 import { useInView } from 'react-intersection-observer';
-import { BsChevronDown } from 'react-icons/bs'
 
 import Navbar from "../components/navbar";
 import GenderOption from "../components/button";
 import Selector from "../components/selector";
+import ScrollBtn from "../components/scrollbtn";
 
 function Home() {
 
@@ -61,12 +61,7 @@ function Home() {
   const pageOneHook = useRef(null);
   const pageTwoHook = useRef(null);
   const pageThreeHook = useRef(null);
-
-  //Function to control scroll button
-  const scrollToPage = (pageHook) => {
-    const scrollTopPosition = pageHook.current.offsetTop - 200;
-    window.scrollTo({ top: scrollTopPosition, behavior: 'smooth' });
-  }
+  const pageFourHook = useRef(null);
 
   //Fade effects for text
   const [iAmText, inView] = useInView({
@@ -94,8 +89,11 @@ function Home() {
   const pageThreeBg = `data:image/svg+xml;base64,${btoa(
     `<svg id="visual" viewBox="0 0 960 540" width="960" height="540" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><rect x="0" y="0" width="960" height="540" fill="#001122"></rect><path d="M0 237L20 245.5C40 254 80 271 120 276.5C160 282 200 276 240 280.2C280 284.3 320 298.7 360 304.2C400 309.7 440 306.3 480 307.5C520 308.7 560 314.3 600 304C640 293.7 680 267.3 720 259.2C760 251 800 261 840 261.3C880 261.7 920 252.3 940 247.7L960 243L960 541L940 541C920 541 880 541 840 541C800 541 760 541 720 541C680 541 640 541 600 541C560 541 520 541 480 541C440 541 400 541 360 541C320 541 280 541 240 541C200 541 160 541 120 541C80 541 40 541 20 541L0 541Z" fill="#6600ff"></path><path d="M0 343L20 341.8C40 340.7 80 338.3 120 327.2C160 316 200 296 240 288.8C280 281.7 320 287.3 360 295.3C400 303.3 440 313.7 480 326.8C520 340 560 356 600 360C640 364 680 356 720 352.7C760 349.3 800 350.7 840 355.5C880 360.3 920 368.7 940 372.8L960 377L960 541L940 541C920 541 880 541 840 541C800 541 760 541 720 541C680 541 640 541 600 541C560 541 520 541 480 541C440 541 400 541 360 541C320 541 280 541 240 541C200 541 160 541 120 541C80 541 40 541 20 541L0 541Z" fill="#6f15ff"></path><path d="M0 391L20 383.7C40 376.3 80 361.7 120 359.8C160 358 200 369 240 374.8C280 380.7 320 381.3 360 377.7C400 374 440 366 480 357.7C520 349.3 560 340.7 600 348.2C640 355.7 680 379.3 720 387.3C760 395.3 800 387.7 840 381.7C880 375.7 920 371.3 940 369.2L960 367L960 541L940 541C920 541 880 541 840 541C800 541 760 541 720 541C680 541 640 541 600 541C560 541 520 541 480 541C440 541 400 541 360 541C320 541 280 541 240 541C200 541 160 541 120 541C80 541 40 541 20 541L0 541Z" fill="#7723ff"></path><path d="M0 396L20 402.8C40 409.7 80 423.3 120 431C160 438.7 200 440.3 240 432C280 423.7 320 405.3 360 400.7C400 396 440 405 480 413C520 421 560 428 600 426.8C640 425.7 680 416.3 720 414.7C760 413 800 419 840 424.5C880 430 920 435 940 437.5L960 440L960 541L940 541C920 541 880 541 840 541C800 541 760 541 720 541C680 541 640 541 600 541C560 541 520 541 480 541C440 541 400 541 360 541C320 541 280 541 240 541C200 541 160 541 120 541C80 541 40 541 20 541L0 541Z" fill="#7f2dff"></path><path d="M0 469L20 459.3C40 449.7 80 430.3 120 426.5C160 422.7 200 434.3 240 444.2C280 454 320 462 360 462.7C400 463.3 440 456.7 480 454.8C520 453 560 456 600 450.8C640 445.7 680 432.3 720 432.7C760 433 800 447 840 455.5C880 464 920 467 940 468.5L960 470L960 541L940 541C920 541 880 541 840 541C800 541 760 541 720 541C680 541 640 541 600 541C560 541 520 541 480 541C440 541 400 541 360 541C320 541 280 541 240 541C200 541 160 541 120 541C80 541 40 541 20 541L0 541Z" fill="#8536ff"></path><path d="M0 511L20 504C40 497 80 483 120 481.5C160 480 200 491 240 490.8C280 490.7 320 479.3 360 477.7C400 476 440 484 480 489.7C520 495.3 560 498.7 600 494.5C640 490.3 680 478.7 720 480.2C760 481.7 800 496.3 840 500.3C880 504.3 920 497.7 940 494.3L960 491L960 541L940 541C920 541 880 541 840 541C800 541 760 541 720 541C680 541 640 541 600 541C560 541 520 541 480 541C440 541 400 541 360 541C320 541 280 541 240 541C200 541 160 541 120 541C80 541 40 541 20 541L0 541Z" fill="#8c3fff"></path></svg>`
   )}`;
-
-  //useState hooks for form data
+  const pageFourBg =  `data:image/svg+xml;base64,${btoa(
+    `<svg id="visual" viewBox="0 0 960 540" width="960" height="540" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><rect x="0" y="0" width="960" height="540" fill="#8C3FFF"></rect><path d="M0 237L20 245.5C40 254 80 271 120 276.5C160 282 200 276 240 280.2C280 284.3 320 298.7 360 304.2C400 309.7 440 306.3 480 307.5C520 308.7 560 314.3 600 304C640 293.7 680 267.3 720 259.2C760 251 800 261 840 261.3C880 261.7 920 252.3 940 247.7L960 243L960 541L940 541C920 541 880 541 840 541C800 541 760 541 720 541C680 541 640 541 600 541C560 541 520 541 480 541C440 541 400 541 360 541C320 541 280 541 240 541C200 541 160 541 120 541C80 541 40 541 20 541L0 541Z" fill="#812cff"></path><path d="M0 343L20 341.8C40 340.7 80 338.3 120 327.2C160 316 200 296 240 288.8C280 281.7 320 287.3 360 295.3C400 303.3 440 313.7 480 326.8C520 340 560 356 600 360C640 364 680 356 720 352.7C760 349.3 800 350.7 840 355.5C880 360.3 920 368.7 940 372.8L960 377L960 541L940 541C920 541 880 541 840 541C800 541 760 541 720 541C680 541 640 541 600 541C560 541 520 541 480 541C440 541 400 541 360 541C320 541 280 541 240 541C200 541 160 541 120 541C80 541 40 541 20 541L0 541Z" fill="#7c26ff"></path><path d="M0 391L20 383.7C40 376.3 80 361.7 120 359.8C160 358 200 369 240 374.8C280 380.7 320 381.3 360 377.7C400 374 440 366 480 357.7C520 349.3 560 340.7 600 348.2C640 355.7 680 379.3 720 387.3C760 395.3 800 387.7 840 381.7C880 375.7 920 371.3 940 369.2L960 367L960 541L940 541C920 541 880 541 840 541C800 541 760 541 720 541C680 541 640 541 600 541C560 541 520 541 480 541C440 541 400 541 360 541C320 541 280 541 240 541C200 541 160 541 120 541C80 541 40 541 20 541L0 541Z" fill="#7720ff"></path><path d="M0 396L20 402.8C40 409.7 80 423.3 120 431C160 438.7 200 440.3 240 432C280 423.7 320 405.3 360 400.7C400 396 440 405 480 413C520 421 560 428 600 426.8C640 425.7 680 416.3 720 414.7C760 413 800 419 840 424.5C880 430 920 435 940 437.5L960 440L960 541L940 541C920 541 880 541 840 541C800 541 760 541 720 541C680 541 640 541 600 541C560 541 520 541 480 541C440 541 400 541 360 541C320 541 280 541 240 541C200 541 160 541 120 541C80 541 40 541 20 541L0 541Z" fill="#7118ff"></path><path d="M0 469L20 459.3C40 449.7 80 430.3 120 426.5C160 422.7 200 434.3 240 444.2C280 454 320 462 360 462.7C400 463.3 440 456.7 480 454.8C520 453 560 456 600 450.8C640 445.7 680 432.3 720 432.7C760 433 800 447 840 455.5C880 464 920 467 940 468.5L960 470L960 541L940 541C920 541 880 541 840 541C800 541 760 541 720 541C680 541 640 541 600 541C560 541 520 541 480 541C440 541 400 541 360 541C320 541 280 541 240 541C200 541 160 541 120 541C80 541 40 541 20 541L0 541Z" fill="#6c0eff"></path><path d="M0 511L20 504C40 497 80 483 120 481.5C160 480 200 491 240 490.8C280 490.7 320 479.3 360 477.7C400 476 440 484 480 489.7C520 495.3 560 498.7 600 494.5C640 490.3 680 478.7 720 480.2C760 481.7 800 496.3 840 500.3C880 504.3 920 497.7 940 494.3L960 491L960 541L940 541C920 541 880 541 840 541C800 541 760 541 720 541C680 541 640 541 600 541C560 541 520 541 480 541C440 541 400 541 360 541C320 541 280 541 240 541C200 541 160 541 120 541C80 541 40 541 20 541L0 541Z" fill="#6600ff"></path></svg>`
+  )}`;
+  
+    //useState hooks for form data
   const [gender, setGender] = useState(null);
 
   return (
@@ -114,9 +112,7 @@ function Home() {
           style={{ transform: 'translateY(-200%)' }}>Let's find your match</h1>
         <div className="text-white text-4xl text-center w-full justify-center flex" 
           style={{ transform: 'translateY(-240%)' }}>
-          <div className="bg-richblack w-12 h-12 rounded-lg cursor-pointer hover:text-richblack hover:bg-white transition duration-200 flex justify-center items-center" onClick = {() => scrollToPage(pageTwoHook)}>
-            <BsChevronDown />
-          </div>  
+          <ScrollBtn destinationPage={pageTwoHook} />
         </div>
 
       </div>
@@ -165,19 +161,30 @@ function Home() {
       </div>
 
       <div 
-        className = "w-full h-screen flex flex-col justify-center" style={{
+        className = "w-full h-screen flex flex-col justify-center items-center" style={{
         backgroundImage: `url(${pageThreeBg})`,
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
       }} ref = {pageThreeHook}>
         <h1 className={`text-6xl text-center mt-20 transition-opacity duration-1000 ${selectorInView ? 'opacity-100' : 'opacity-0'}`} 
-        style={{ transform: 'translateY(-650%)' }}>I'm looking for...</h1>
+        style={{ transform: 'translateY(-550%)' }}>I'm looking for...</h1>
         <div className={`flex mt-4 w-full items-center justify-center transition duration-1000 ${selectorInView ? 'opacity-100' : 'opacity-0'}`} style={{ transform: 'translateY(-300%)' }} ref={preferencesChoosers}>
           <Selector preferences = {preferencesChosen} preference = 'Boys' label = 'Boys' emoji = '👦' preferenceSelectionFunc = {preferenceClicked} />
           <Selector preferences = {preferencesChosen} preference = 'Girls' label = 'Girls' emoji = '👧' preferenceSelectionFunc = {preferenceClicked} />
           <Selector preferences = {preferencesChosen} preference = 'People' label = 'People' emoji = '🧑' preferenceSelectionFunc = {preferenceClicked} />
         </div>
+        <div style={{ transform: 'translateY(-400%)' }}><ScrollBtn destinationPage={pageFourHook}/></div>
 
+      </div>
+
+      <div 
+        className = "w-full h-screen flex flex-col justify-center" ref = {pageFourHook} style={{
+        backgroundImage: `url(${pageFourBg})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+      }}>
+         <h1 className={`text-6xl text-center mt-20 transition-opacity duration-1000 `} 
+        style={{ transform: 'translateY(-650%)' }}>My interests are...</h1>
       </div>
 
     </div>
