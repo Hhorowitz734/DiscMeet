@@ -4,8 +4,27 @@ import { BsChevronDown } from 'react-icons/bs'
 
 import Navbar from "../components/navbar";
 import GenderOption from "../components/button";
+import Selector from "../components/selector";
 
 function Home() {
+
+  //Preference selected object
+
+  const [preferencesChosen, setPreferencesChosen] = useState([]);
+
+  function preferenceClicked(preference) {
+    const index = preferencesChosen.indexOf(preference);
+    const updatedPreferences = [...preferencesChosen];
+    
+    if (index !== -1) {
+      console.log(index, updatedPreferences[index]);
+      updatedPreferences.splice(index, 1);
+      setPreferencesChosen(updatedPreferences);
+    } else {
+      setPreferencesChosen([...updatedPreferences, preference]);
+    }
+  }
+  
 
   //Gender selected object 
   class Gender {
@@ -127,12 +146,18 @@ function Home() {
       </div>
 
       <div 
-        className = "w-full h-screen flex justify-center" style={{
+        className = "w-full h-screen flex flex-col justify-center" style={{
         backgroundImage: `url(${pageThreeBg})`,
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
       }} ref = {pageThreeHook}>
-        <h1 className={`text-6xl text-center mt-20 transition-opacity duration-500 `} >I'm looking for...</h1>
+        <h1 className={`text-6xl text-center mt-20 transition-opacity duration-500 `} 
+        style={{ transform: 'translateY(-650%)' }}>I'm looking for...</h1>
+        <div className="flex mt-4 w-full items-center justify-center" style={{ transform: 'translateY(-300%)' }}>
+          <Selector preferences = {preferencesChosen} preference = 'Boys' label = 'Boys' emoji = '👦' preferenceSelectionFunc = {preferenceClicked} />
+          <Selector preferences = {preferencesChosen} preference = 'Girls' label = 'Girls' emoji = '👧' preferenceSelectionFunc = {preferenceClicked} />
+          <Selector preferences = {preferencesChosen} preference = 'People' label = 'People' emoji = '🧑' preferenceSelectionFunc = {preferenceClicked} />
+        </div>
 
       </div>
 
